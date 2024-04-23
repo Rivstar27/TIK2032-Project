@@ -1,16 +1,89 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Gallery</title>
-    </head>
-    <body>
-        <header>
-             <h1>My Photos</h1>
-        </header>
-        <div>
-            <img src="foto saya.jpg"/>
-        </div>
-    </body>
+    <title>Gallery</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+            color: #333;
+            text-align: center;
+        }
+
+        header {
+            background-color: #333;
+            color: white;
+            padding: 10px 20px;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+        }
+
+        div {
+            margin: 20px;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        img:hover {
+            transform: scale(1.1);
+        }
+    </style>
+</head>
+<body>
+    <header>
+         <h1>My Photos</h1>
+    </header>
+    <div>
+        <img src="foto1.jpg" onclick="openModal('foto1.jpg')" />
+        <img src="foto2.jpg" onclick="openModal('foto2.jpg')" />
+        <img src="foto3.jpg" onclick="openModal('foto3.jpg')" />
+    </div>
+
+    <script>
+        let currentImageIndex = 0;
+        const images = ["foto1.jpg", "foto2.jpg", "foto3.jpg"];
+
+        function openModal(imageUrl) {
+            currentImageIndex = images.indexOf(imageUrl);
+            document.getElementById('modal').style.display = 'block';
+            showImage(imageUrl);
+        }
+
+        function closeModal() {
+            document.getElementById('modal').style.display = 'none';
+        }
+
+        function showImage(imageUrl) {
+            document.getElementById('modal-image').src = imageUrl;
+        }
+
+        function nextImage() {
+            currentImageIndex = (currentImageIndex + 1) % images.length;
+            showImage(images[currentImageIndex]);
+        }
+
+        function prevImage() {
+            currentImageIndex = (currentImageIndex - 1 + images.length) % images.length;
+            showImage(images[currentImageIndex]);
+        }
+    </script>
+
+    <div id="modal" style="display: none;">
+        <span onclick="closeModal()" class="close">&times;</span>
+        <img id="modal-image" src="" style="max-width: 80%; max-height: 80vh;">
+        <button onclick="prevImage()">Previous</button>
+        <button onclick="nextImage()">Next</button>
+    </div>
+</body>
 </html>
